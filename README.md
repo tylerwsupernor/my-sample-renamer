@@ -96,7 +96,7 @@ Where:
 
 ## Author
 
-Tyler Supernor
+Tyler W. Supernor
 
 ## Version
 
