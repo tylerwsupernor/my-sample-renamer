@@ -6,24 +6,37 @@
 MM.DD {Sample Name} br0 {number}
 ```
 
-It was made to remove redundant naming steps from a sample-creation workflow. Select the Arrangement clips you want to turn into samples, enter one shared sample name, and the extension names each clip in sequence. You can then crop or consolidate the clips and drag them straight into your created-samples folder with clean, consistent names already in place.
+Built to remove repetitive naming from the sample-creation workflow: select bounced clips, enter one shared name, and rename the entire selection in sequence.
 
-For example, entering `Kick Bounce` on August 18 creates:
+## Features
+
+- Batch-renames selected audio clips in **Arrangement View**
+- Uses the selected track lane(s) and time range to identify clips
+- Prompts for one shared sample name
+- Automatically adds a date prefix, `br0` revision label, and sequence number
+- Numbers clips from left to right in Arrangement order
+- Runs as a single action, so the batch can be undone with Ableton Live's normal Undo command
+
+## Naming Format
+
+```text
+MM.DD {Sample Name} br0 {number}
+```
+
+| Element | Description |
+| --- | --- |
+| `MM.DD` | Current month and day |
+| `{Sample Name}` | The shared name entered in the extension dialog |
+| `br0` | Personal bounce / revision label |
+| `{number}` | Sequential clip number, beginning at `1` |
+
+For example, entering `Kick Bounce` on August 18 produces:
 
 ```text
 08.18 Kick Bounce br0 1
 08.18 Kick Bounce br0 2
 08.18 Kick Bounce br0 3
 ```
-
-## What it does
-
-- Batch-renames clips in Ableton Live’s **Arrangement View**.
-- Uses the selected Arrangement track lane(s) and selected time range to determine which clips to rename.
-- Opens a simple dialog where you enter one base sample name.
-- Adds the date prefix, `br0` label, and an ordered number automatically.
-- Numbers clips from left to right in the Arrangement.
-- Makes the rename pass as one action, so you can use Live’s normal Undo command if needed.
 
 ## Install
 
@@ -33,18 +46,23 @@ This extension is distributed as an `.ablx` file:
 my-sample-renamer-1.0.0.ablx
 ```
 
-To install it:
+## Installation
 
-1. Open a compatible version of **Ableton Live with Extensions support**.
-2. Drag `my-sample-renamer-1.0.0.ablx` into Live, or use Live’s Extensions installation option.
-3. Once installed, the tool appears in the **Extensions** submenu when you right-click an eligible Arrangement selection.
+1. Download `my-sample-renamer-1.0.0.ablx` from this repository's [Releases](../../releases) page.
+2. Open **Ableton Live 12 Suite Beta**.
+3. Open **Settings/Preferences**:
+   - macOS: press `Cmd + ,`
+   - Windows: open **Options → Preferences**
+4. Select **Extensions**.
+5. Drag `my-sample-renamer-1.0.0.ablx` into the Extensions settings page.
+6. Restart Live when prompted.
+
 
 ## How to use it
 
 1. Open **Arrangement View** in Ableton Live.
-2. Select the track lane or lanes containing the audio clips you want to name.
-3. Drag a time selection over the clips you want included.
-4. Right-click inside the selected Arrangement area.
+3. Drag a time selection over the clips you want to rename.
+4. Right-click inside the selected area.
 5. Choose **Extensions → my-sample-renamer: Rename Selected Clips**.
 6. Type the shared base name for the samples.
 7. Click **Rename Clips**.
@@ -88,11 +106,12 @@ Where:
 
 ## Notes
 
-- The extension works from **Arrangement View**, not Session View.
+- The extension works in **Arrangement View**.
 - Make sure you have an actual time selection and relevant track lane selected before opening the context menu.
 - The extension renames the Ableton clips; it does not render, crop, consolidate, move, or export audio files for you.
 - Test it on a copied Set the first few times if you are working in an important project.
 - Use `Cmd + Z` in Live to undo the entire rename batch if you need to revert it.
+- Feel free to make it your own, I'm assuming you have a different naming convention than I do.
 
 ## Author
 
