@@ -1,5 +1,7 @@
 # My Sample Renamer
 
+> Quickly rename Arrangement View audio clips in Ableton Live using a personal sample-naming convention with a date prefix, shared base name, revision tag, and sequential numbering.
+
 **My Sample Renamer** is an Ableton Live Extension for quickly naming audio clips in Arrangement View using a personal sample-naming convention:
 
 ```text
@@ -16,35 +18,32 @@ Built to remove repetitive naming from the sample-creation workflow: select boun
 - Automatically adds a date prefix, `br0` revision label, and sequence number
 - Numbers clips from left to right in Arrangement order
 - Runs as a single action, so the batch can be undone with Ableton Live's normal Undo command
+- Changes clip names only — it does not crop, consolidate, render, move, or export audio files for you
 
-## Naming Format
+## Requirements
 
-```text
-MM.DD {Sample Name} br0 {number}
-```
+This Extension currently requires:
 
-| Element | Description |
-| --- | --- |
-| `MM.DD` | Current month and day |
-| `{Sample Name}` | The shared name entered in the extension dialog |
-| `br0` | Personal bounce / revision label |
-| `{number}` | Sequential clip number, beginning at `1` |
+- **Ableton Live 12 Suite Beta 12.4.5 or later**
+- The packaged `.ablx` may work on Windows, but it has not yet been tested
+- The packaged extension file: `my-sample-renamer-1.0.0.ablx`
 
-For example, entering `Kick Bounce` on August 18 produces:
+> [!IMPORTANT]
+> Ableton Extensions are currently part of Ableton Live's public beta workflow. They do not work in Live Standard, Intro, Lite, or earlier Live versions. You do **not** need the Ableton Extensions SDK or Node.js just to install and use the `.ablx` file. [Ableton Extensions FAQ](https://help.ableton.com/hc/en-us/articles/27303428331420-Ableton-Extensions-FAQ)
 
-```text
-08.18 Kick Bounce br0 1
-08.18 Kick Bounce br0 2
-08.18 Kick Bounce br0 3
-```
+## More on Ableton Extensions
 
-## Install
+Want to learn more about what Ableton Extensions are or how to build your own?
 
-This extension is distributed as an `.ablx` file:
+- [Read about Extensions on Ableton.com](https://www.ableton.com/en/live/extensions)
+- [Explore the Extension SDK](https://ableton.github.io/extensions-sdk)
+- [Join Ableton’s Discord](https://discord.gg/ableton) to connect with other users and developers
 
-```text
-my-sample-renamer-1.0.0.ablx
-```
+## Disclaimer
+
+This project was developed with help from AI tools, which assisted with parts of the code, troubleshooting, and documentation. I remain responsible for the design, testing, and final decisions, but it may not be written in the most elegant way.
+
+If AI-assisted development isn’t your thing, no hard feelings at all. Thanks for giving it a look anyway.
 
 ## Installation
 
@@ -57,21 +56,22 @@ my-sample-renamer-1.0.0.ablx
 5. Drag `my-sample-renamer-1.0.0.ablx` into the Extensions settings page.
 6. Restart Live when prompted.
 
+For normal use of the installed `.ablx`, make sure **Developer Mode is turned off**.
 
-## How to use it
+## How to Use
 
-1. Open **Arrangement View** in Ableton Live.
-3. Drag a time selection over the clips you want to rename.
-4. Right-click inside the selected area.
-5. Choose **Extensions → my-sample-renamer: Rename Selected Clips**.
-6. Type the shared base name for the samples.
-7. Click **Rename Clips**.
+1. Switch to **Arrangement View**.
+2. Make a **time selection** over the clips you want to rename on the relevant audio track lane or lanes.
+3. Right-click inside the selected area.
+4. Choose **Extensions → my-sample-renamer: Rename Selected Clips**.
+5. Type the shared base name for the samples.
+6. Click **Rename Clips**.
 
 Every clip that overlaps your selected lane(s) and time range is renamed in Arrangement order.
 
 ## Example workflow
 
-You have several bounced kick variations arranged next to each other and want to save them as reusable samples:
+You have several bounced kick variations arranged next to each other and want to save them as reusable samples.
 
 1. Select the bounced clips in Arrangement View.
 2. Run **Rename Selected Clips**.
@@ -89,34 +89,88 @@ You have several bounced kick variations arranged next to each other and want to
 
 The clips have already been named consistently, so there is no need to rename each file manually afterward.
 
-## Naming format
+## Undo
 
-The current naming structure is:
+The whole rename operation is performed as one Ableton Live transaction.
 
-```text
-MM.DD {Sample Name} br0 {number}
+Press:
+
+- macOS: `Cmd + Z`
+- Windows: `Ctrl + Z`
+
+...once to restore all clip names from that rename pass.
+
+## Safety
+
+My Sample Renamer changes **only the names of Arrangement View audio clips that overlap the active time selection on the selected track lane or lanes**.
+
+It does not change:
+
+- Audio files or samples on disk
+- MIDI notes
+- Clip placement, length, looping, or warp settings
+- Track names or colors
+- Devices, effects, parameters, automation, routing, or mixer settings
+- Session View clips
+
+Still, as with any tool that changes a Live Set, test it first in a duplicate or saved version of an important project.
+
+## Troubleshooting
+
+### I do not see "Extensions" in the right-click menu
+
+Check all of the following:
+
+- You are running **Ableton Live 12 Suite Beta 12.4.5 or later**
+- You installed the `.ablx` file in **Settings/Preferences → Extensions**
+- You restarted Live after installation
+- **Developer Mode is off** when using the packaged `.ablx`
+- You are in **Arrangement View**, not Session View
+- You created a **time selection** and right-clicked inside the selected range on the correct audio track lane
+
+Extensions are context-sensitive: Live only shows them when the selected item matches the Extension's supported context.
+
+### I installed it but an older version appears to run
+
+Remove the old version from **Settings/Preferences → Extensions**, install `my-sample-renamer-1.0.0.ablx`, then restart Live.
+
+### Can I use this in Live Standard, Intro, or Lite?
+
+No. The Ableton Extensions public beta currently requires **Live 12 Suite Beta 12.4.5 or later**.
+
+## Building From Source
+
+If you want to edit or develop the Extension yourself:
+
+```bash
+npm install
+npm start
 ```
 
-Where:
+Build an installable package with:
 
-- `MM.DD` is the date prefix used by the extension.
-- `{Sample Name}` is the name you type into the dialog.
-- `br0` is your personal bounce / revision label.
-- `{number}` increments for every renamed clip, starting at `1`.
+```bash
+npm run package
+```
 
-## Notes
+This produces an `.ablx` file in the project folder.
 
-- The extension works in **Arrangement View**.
-- Make sure you have an actual time selection and relevant track lane selected before opening the context menu.
-- The extension renames the Ableton clips; it does not render, crop, consolidate, move, or export audio files for you.
-- Test it on a copied Set the first few times if you are working in an important project.
-- Use `Cmd + Z` in Live to undo the entire rename batch if you need to revert it.
-- Feel free to make it your own, I'm assuming you have a different naming convention than I do.
+Development requires the Ableton Extensions SDK, Node.js, and a compatible Ableton Live 12 Suite Beta installation. See the [official Ableton Extensions SDK documentation](https://ableton.github.io/extensions-sdk/).
 
-## Author
+## Version History
 
-Tyler W. Supernor
+### v1.0.0
 
-## Version
+- Initial release
+- Batch-renamed Arrangement View audio clips using the `MM.DD {Sample Name} br0 {number}` naming convention
+- Prompted for one shared sample name and applied sequential numbering in Arrangement order
 
-1.0.0
+## License
+
+MIT License. See [`LICENSE`](./LICENSE) for details.
+
+## Credits
+
+Built by Tyler W. Supernor with the [Ableton Extensions SDK](https://ableton.github.io/extensions-sdk/).
+
+Ableton Live is a trademark of Ableton AG. This project is an independent community tool and is not affiliated with or endorsed by Ableton AG.
